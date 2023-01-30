@@ -1,0 +1,113 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+    struct node *prev;
+    struct node *next;
+    int data;
+};
+struct node *head;
+void insert();
+void deletion();
+void display();
+
+int main ()
+{
+int choice =0;
+    while(choice != 4)
+    {
+        printf("\n*********Menu*********\n");
+        printf(" 1. Insert \n 2. Delete \n 3. Display \n 4. Exit");
+        printf("\nEnter your choice: ");
+        scanf("%d",&choice);
+        switch(choice)
+        {
+            case 1:
+            insert();
+            break;
+            case 2:
+            deletion();
+            break;
+            case 3:
+            display();
+            break;
+            case 4:
+            exit(0);
+            break;
+            default:
+            printf("Please enter valid choice..");
+        }
+    }
+    return 0;
+}
+void insert()
+{
+   struct node *ptr;
+   int item;
+   ptr = (struct node *)malloc(sizeof(struct node));
+   if(ptr == NULL)
+   {
+       printf("\nOVERFLOW");
+   }
+   else
+   {
+    printf("\nEnter Item value: ");
+    scanf("%d",&item);
+
+   if(head==NULL)
+   {
+       ptr->next = NULL;
+       ptr->prev=NULL;
+       ptr->data=item;
+       head=ptr;
+   }
+   else
+   {
+       ptr->data=item;
+       ptr->prev=NULL;
+       ptr->next = head;
+       head->prev=ptr;
+       head=ptr;
+   }
+   printf("\nNode inserted\n");
+}
+
+}
+
+void deletion()
+{
+    struct node *ptr;
+    if(head == NULL)
+    {
+        printf("\n Linked list is empty!");
+    }
+    else if(head->next == NULL)
+    {
+        head = NULL;
+        free(head);
+        printf("\n node deleted\n");
+    }
+    else
+    {
+        ptr = head;
+        if(ptr->next != NULL)
+        {
+            ptr = ptr -> next;
+        }
+        ptr -> prev -> next = NULL;
+        free(ptr);
+        printf("\n node deleted\n");
+    }
+}
+
+void display()
+{
+    struct node *ptr;
+    printf("\n Given Doubly Linked list is: \n");
+    ptr = head;
+    while(ptr != NULL)
+    {
+        printf("%d\n",ptr->data);
+        ptr=ptr->next;
+    }
+}
